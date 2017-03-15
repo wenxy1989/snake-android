@@ -1,0 +1,18 @@
+def initGradleEnvironment(){
+	println "initialize gradle environment ......"
+	Properties properties = new Properties();
+	File propertyFile = new File(rootDir.getAbsolutePath()+'/local.properties');
+	properties.load(propertyFile.newDataInputStream());
+	
+	gradle.ext.api = properties.getProperty('sdk.api');
+	gradle.ext.sdkDir = properties.getProperty('sdk.dir');
+	gradle.ext.ndkDir = properties.getProperty('ndk.dir');
+	gradle.ext.localDir = properties.getProperty('local.dir');
+	
+	gradle.ext.debugKeystore = properties.getProperty('debug.keystore');
+	
+}
+
+initGradleEnvironment();
+
+include 'snake-book'
