@@ -2,7 +2,7 @@ package com.android.snake.book;
 
 import android.app.Application;
 
-import com.mazouri.tools.Tools;
+import com.orm.SugarContext;
 
 public class MainApplication extends Application {
     /**
@@ -11,7 +11,14 @@ public class MainApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        Tools.init(this);
-        Tools.openToolsLog(true);
+        SugarContext.init(this);
+//        Tools.init(this);
+//        Tools.openToolsLog(true);
+    }
+
+    @Override
+    public void onTerminate() {
+        super.onTerminate();
+        SugarContext.terminate();
     }
 }

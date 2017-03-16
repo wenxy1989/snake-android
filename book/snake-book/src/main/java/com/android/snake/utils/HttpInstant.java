@@ -1,5 +1,7 @@
 package com.android.snake.utils;
 
+import android.util.Log;
+
 import java.io.BufferedReader;
 import java.io.CharArrayWriter;
 import java.io.IOException;
@@ -12,16 +14,17 @@ import java.net.URL;
 /**
  * Created by wenxy on 2017/3/11.
  */
-public class HttpNetInstant {
+public class HttpInstant {
 
     private static final String CHAR_SET = "UTF-8";
 //    private static final String serverHost = "http://localhost:8007/";
-    private static final String serverHost = "http://192.168.2.106:8007/";
+//    private static final String serverHost = "http://192.168.2.106:8007/";
+    private static final String serverHost = "http://192.168.3.44:8007/";
 
-    private static HttpNetInstant instant;
+    private static HttpInstant instant;
 
-    public static HttpNetInstant getInstant() {
-        return new HttpNetInstant();
+    public static HttpInstant getInstant() {
+        return new HttpInstant();
     }
 
     public String decodeInputStream(InputStream in) throws IOException {
@@ -52,20 +55,24 @@ public class HttpNetInstant {
         return doHttpRequest(uri,"POST",json);
     }
 
-    public String doHttpRequest(String uri,String method, String params) {
+    public String doHttpRequest(String uri,String method, String json) {
         String result = null;
         OutputStream out = null;
         InputStream in = null;
         try {
+            Log.d("book http url ",serverHost + uri);
+            if(null != json) {
+                Log.d("book http data  ", json);
+            }
             URL url = new URL(serverHost + uri);
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setConnectTimeout(3000);
-            connection.setDoInput(true);
+            connection.setDoOutput(true);
             connection.setRequestMethod(method);
             connection.setUseCaches(false);
-            connection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
-            if (null != params) {
-                byte[] data = params.toString().getBytes(CHAR_SET);
+            connection.setRequestProperty("Content-Type", "application/json");
+            if (null != json) {
+                byte[] data = json.getBytes(CHAR_SET);
                 connection.setRequestProperty("Content-Length", String.valueOf(data.length));
                 connection.setDoInput(true);
                 out = connection.getOutputStream();
@@ -77,7 +84,7 @@ public class HttpNetInstant {
                 result = decodeInputStream(in);
             }
         } catch (IOException e) {
-            result = "error : " + e.getMessage();
+            Log.d("book http error ", e.getMessage());
         } finally {
             try {
                 if (null != in) {
@@ -90,6 +97,14 @@ public class HttpNetInstant {
                 e.printStackTrace();
             }
         }
+        Log.d("book http return ", result);
         return result;
     }
+
+    /*public static void main(String args[]){
+        String result = HttpInstant.getInstant().doPost("book/api/book/list");
+        String result = HttpInstant.getInstant().doGet("book/api/book/list","{\"start\":0,\"count\":5}");
+        System.out.println(result);
+    }*/
+
 }

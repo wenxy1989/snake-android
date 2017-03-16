@@ -31,8 +31,9 @@ dependencies {
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
+    compile 'com.github.satyan:sugar:1.4'
     compile 'com.android.support:appcompat-v7:25.1.0'
-    compile 'com.github.mazouri:AndroidTools:1.0'
+    //compile 'com.github.mazouri:AndroidTools:1.0'
     compile 'com.github.bumptech.glide:glide:3.7.0'
     compile 'com.daijia.android:library:1.0.1'
     compile 'com.lb:materialdesigndialog:1.0.0'

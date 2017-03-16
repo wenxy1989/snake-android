@@ -1,10 +1,14 @@
-package com.android.snake.book;
+package com.android.snake.model;
+
+import com.orm.SugarRecord;
+import com.orm.dsl.Table;
 
 /**
  * 书籍text
  * Created by wen on 2015/8/11.
  */
-public class Book {
+@Table(name = "snake_book")
+public class Book extends SugarRecord{
 
     private Long id;
     private String name;
@@ -12,10 +16,14 @@ public class Book {
     private String introduction;//简介
     private String createdTime;
 
+    public Book(){}
+
+    @Override
     public Long getId() {
         return id;
     }
 
+    @Override
     public void setId(Long id) {
         this.id = id;
     }
