@@ -2,6 +2,7 @@ package com.android.snake.service;
 
 import android.util.Log;
 
+import com.android.snake.common.NetCallback;
 import com.android.snake.model.Book;
 
 import org.json.JSONException;
@@ -13,11 +14,12 @@ import org.json.JSONObject;
 
 public class BookNetService extends AbstractNetService<Book> {
 
-    private BookNetService() {
+    public BookNetService(NetCallback callback) {
+        super(callback);
     }
 
-    public static BookNetService getInstance() {
-        return new BookNetService();
+    public static BookNetService getInstance(NetCallback callback) {
+        return new BookNetService(callback);
     }
 
     @Override

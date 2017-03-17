@@ -22,22 +22,6 @@ public class BookService {
     }
 
     public void updateLocal() {
-        NetService netService = BookNetService.getInstance().getList(new AbstractNetCallback(this.context) {
-            @Override
-            public void callback(Object result) {
-                List<Book> list = (List<Book>) result;
-                for (Book book : list) {
-                    Log.d("book name ",book.getName());
-                    Log.d("book author ",book.getAuthor());
-                    Log.d("book introduction",book.getIntroduction());
-                    Log.d("book createdTime",book.getCreatedTime());
-//                    long id = book.save();
-//                    Log.i("book save ", "book id is " + id);
-                }
-            }
-        });
-        Log.i("book activity", "prepare do http request");
-        netService.syncExecute();
     }
 
 }

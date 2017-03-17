@@ -1,6 +1,7 @@
 package com.android.snake.book;
 
 import android.app.Application;
+import android.content.Intent;
 
 import com.orm.SugarContext;
 
@@ -12,8 +13,6 @@ public class MainApplication extends Application {
     public void onCreate() {
         super.onCreate();
         SugarContext.init(this);
-//        Tools.init(this);
-//        Tools.openToolsLog(true);
     }
 
     @Override

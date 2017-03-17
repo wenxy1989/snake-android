@@ -1,32 +1,36 @@
 package com.android.snake.model;
 
+import com.google.gson.annotations.Expose;
 import com.orm.SugarRecord;
+import com.orm.dsl.Column;
 import com.orm.dsl.Table;
+
+import java.io.Serializable;
 
 /**
  * 书籍text
  * Created by wen on 2015/8/11.
  */
 @Table(name = "snake_book")
-public class Book extends SugarRecord{
+public class Book extends SugarRecord implements Serializable {
 
-    private Long id;
+    @Expose
+    @Column(name = "name_")
     private String name;
+
+    @Expose
+    @Column(name = "author_")
     private String author;//作者
+
+    @Expose
+    @Column(name = "introduction_")
     private String introduction;//简介
+
+    @Expose
+    @Column(name = "created_time")
     private String createdTime;
 
     public Book(){}
-
-    @Override
-    public Long getId() {
-        return id;
-    }
-
-    @Override
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public String getName() {
         return name;

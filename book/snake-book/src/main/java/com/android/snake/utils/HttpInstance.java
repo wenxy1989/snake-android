@@ -14,17 +14,15 @@ import java.net.URL;
 /**
  * Created by wenxy on 2017/3/11.
  */
-public class HttpInstant {
+public class HttpInstance {
 
     private static final String CHAR_SET = "UTF-8";
 //    private static final String serverHost = "http://localhost:8007/";
 //    private static final String serverHost = "http://192.168.2.106:8007/";
     private static final String serverHost = "http://192.168.3.44:8007/";
 
-    private static HttpInstant instant;
-
-    public static HttpInstant getInstant() {
-        return new HttpInstant();
+    public static HttpInstance getInstant() {
+        return new HttpInstance();
     }
 
     public String decodeInputStream(InputStream in) throws IOException {

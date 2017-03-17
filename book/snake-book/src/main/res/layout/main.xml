@@ -9,5 +9,15 @@
             android:layout_height="wrap_content"
             android:text="Hello World, MyActivity"
             />
+    <Button
+        android:text="Book Sync Button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/button_book_sync" />
+    <Button
+        android:text="Paragraph Sync Button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/button_paragraph_sync" />
 </LinearLayout>
 
