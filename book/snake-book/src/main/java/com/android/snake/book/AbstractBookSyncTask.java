@@ -22,6 +22,7 @@ public abstract class AbstractBookSyncTask extends AsyncTask<Object, Object, Obj
 
 
     public abstract String getModule();
+    public abstract String getSyncKey();
 
     private static final String LOG_TAG = "snake book sync task";
 
@@ -33,7 +34,7 @@ public abstract class AbstractBookSyncTask extends AsyncTask<Object, Object, Obj
             String jsonString = HttpInstance.getInstant().doGet("book/api/" + getModule() + "/stat");
             JSONObject json = new JSONObject(jsonString);
             int total = json.getInt("count");
-            List<Sync> list = Sync.find(Sync.class, "module_=?", getModule());
+            List<Sync> list = Sync.find(Sync.class, "key_=?", getSyncKey());
             if (null != list && list.size() > 0) {
                 sync = list.get(0);
                 if (sync.getTotalCount() == total) {
@@ -41,7 +42,7 @@ public abstract class AbstractBookSyncTask extends AsyncTask<Object, Object, Obj
                 }
             } else {
                 sync = new Sync();
-                sync.setModule(getModule());
+                sync.setKey(getSyncKey());
                 sync.setTotalCount(total);
                 sync.setSyncCount(0);
                 sync.setSyncTime(DateTimeUtils.getInstance().getNowDateTime());
@@ -56,12 +57,16 @@ public abstract class AbstractBookSyncTask extends AsyncTask<Object, Object, Obj
         return sync;
     }
 
+    public String listRequestJson(int start,int count){
+        return "{\"start\":" + start + ",\"count\":" + count + "}";
+    }
+
     public int syncList(Sync sync,int start) {
         int syncCount = 0;
         try {
             int totalCount = sync.getTotalCount();
             int count = 100;
-            String jsonString = HttpInstance.getInstant().doPost("book/api/" + getModule() + "/list", "{\"start\":" + start + ",\"count\":" + count + "}");
+            String jsonString = HttpInstance.getInstant().doPost("book/api/" + getModule() + "/list", listRequestJson(start,count));
             JSONArray array = new JSONArray(jsonString);
             for (int i = 0; i < array.length(); i++) {
                 JSONObject json = array.getJSONObject(i);

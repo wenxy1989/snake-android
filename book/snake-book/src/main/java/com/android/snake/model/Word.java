@@ -8,14 +8,12 @@ import com.orm.dsl.Table;
 import java.io.Serializable;
 
 /**
- * Created by HP on 2017/3/17.
+ * Created by wenxy on 2017/3/18.
  */
-@Table(name = "book_paragraph")
-public class Paragraph extends SugarRecord implements Serializable {
 
-    @Expose
-    @Column(name = "book_id")
-    private long bookId;
+@Table(name = "book_word")
+public class Word extends SugarRecord implements Serializable{
+
     @Expose
     @Column(name = "value_")
     private String value;
@@ -28,21 +26,6 @@ public class Paragraph extends SugarRecord implements Serializable {
     @Expose
     @Column(name = "deleted_")
     private int deleted;
-
-    public Paragraph(){}
-
-    public Paragraph(long bookId,String value){
-        this.bookId = bookId;
-        this.value = value;
-    }
-
-    public long getBookId() {
-        return bookId;
-    }
-
-    public void setBookId(long bookId) {
-        this.bookId = bookId;
-    }
 
     public String getValue() {
         return value;

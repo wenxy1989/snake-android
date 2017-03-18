@@ -4,6 +4,7 @@
               android:layout_width="fill_parent"
               android:layout_height="fill_parent"
         >
+
     <TextView
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
@@ -15,9 +16,9 @@
         android:layout_height="wrap_content"
         android:id="@+id/button_book_sync" />
     <Button
-        android:text="Paragraph Sync Button"
+        android:text="Button Home"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/button_paragraph_sync" />
+        android:id="@+id/book_home_button" />
 </LinearLayout>
 

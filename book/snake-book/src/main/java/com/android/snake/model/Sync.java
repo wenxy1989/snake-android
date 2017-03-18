@@ -14,8 +14,8 @@ import java.io.Serializable;
 public class Sync extends SugarRecord implements Serializable {
 
     @Expose
-    @Column(name = "module_",unique = true,notNull = true)
-    private String module;
+    @Column(name = "key_",unique = true,notNull = true)
+    private String key;
 
     @Expose
     @Column(name = "total_count")
@@ -30,16 +30,16 @@ public class Sync extends SugarRecord implements Serializable {
     private String syncTime;
 
     public Sync(){}
-    public Sync(String module){
-        this.module = module;
+    public Sync(String key){
+        this.key = key;
     }
 
-    public String getModule() {
-        return module;
+    public String getKey() {
+        return key;
     }
 
-    public void setModule(String module) {
-        this.module = module;
+    public void setKey(String key) {
+        this.key = key;
     }
 
     public int getTotalCount() {

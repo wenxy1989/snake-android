@@ -14,6 +14,10 @@ import java.io.Serializable;
 @Table(name = "snake_book")
 public class Book extends SugarRecord implements Serializable {
 
+
+    @Expose
+    @Column(name = "book_id",unique = true)
+    private long bookId;
     @Expose
     @Column(name = "name_")
     private String name;
@@ -29,8 +33,19 @@ public class Book extends SugarRecord implements Serializable {
     @Expose
     @Column(name = "created_time")
     private String createdTime;
+    @Expose
+    @Column(name = "status_")
+    private int status;
 
     public Book(){}
+
+    public long getBookId() {
+        return bookId;
+    }
+
+    public void setBookId(long bookId) {
+        this.bookId = bookId;
+    }
 
     public String getName() {
         return name;
@@ -62,5 +77,13 @@ public class Book extends SugarRecord implements Serializable {
 
     public void setCreatedTime(String createdTime) {
         this.createdTime = createdTime;
+    }
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
     }
 }
