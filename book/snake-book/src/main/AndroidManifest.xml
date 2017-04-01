@@ -19,6 +19,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".BookActivity"/>
+        <activity android:name=".WordActivity"/>
+        <activity android:name=".ParagraphActivity"/>
 
         <meta-data android:name="DATABASE" android:value="snake_book.db"/>
         <meta-data android:name="VERSION" android:value="1"/>

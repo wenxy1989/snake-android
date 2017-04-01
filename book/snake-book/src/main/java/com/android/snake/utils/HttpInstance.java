@@ -18,8 +18,8 @@ public class HttpInstance {
 
     private static final String CHAR_SET = "UTF-8";
 //    private static final String serverHost = "http://localhost:8007/";
-    private static final String serverHost = "http://192.168.2.114:8081/";
-//    private static final String serverHost = "http://192.168.3.44:8007/";
+//    private static final String serverHost = "http://192.168.2.114:8081/";
+    private static final String serverHost = "http://192.168.3.44:8007/";
 
     public static HttpInstance getInstant() {
         return new HttpInstance();

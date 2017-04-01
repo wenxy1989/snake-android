@@ -1,6 +1,7 @@
 package com.android.snake.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -10,6 +11,7 @@ import android.widget.TextView;
 
 import com.android.snake.ObjectValueView;
 import com.android.snake.book.AbstractBookSyncTask;
+import com.android.snake.book.ParagraphActivity;
 import com.android.snake.book.R;
 import com.android.snake.model.Book;
 import com.android.snake.model.Paragraph;
@@ -28,7 +30,14 @@ public class BookHomeListViewAdapter extends BaseSwipeAdapter {
 
     private static final String LOG_TAG = "snake book B";
 
+    public static long selected_book_id = 0l;
+
     private Context context;
+
+    private View.OnClickListener bookNameOnClick;
+    public void bookNameOnClick(View.OnClickListener bookNameOnClick){
+        this.bookNameOnClick = bookNameOnClick;
+    }
 
     public BookHomeListViewAdapter(Context context) {
         this.context = context;
@@ -45,15 +54,24 @@ public class BookHomeListViewAdapter extends BaseSwipeAdapter {
         SwipeLayout swipeLayout = (SwipeLayout) itemView.findViewById(getSwipeLayoutResourceId(position));
         swipeLayout.addSwipeListener(new SimpleSwipeListener() {
             @Override
-            public void onOpen(SwipeLayout layout) {
-                /*TextView textView = (TextView) layout.findViewById(R.id.text_book_home_item_name);
+            public void onOpen(final SwipeLayout layout) {
+                TextView textBookName = (TextView) layout.findViewById(R.id.text_book_home_item_name);
+//                textBookName.setOnClickListener(bookNameOnClick);
+                textBookName.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        selected_book_id = (Long) ((ObjectValueView) layout.findViewById(R.id.object_book_home_item_book_id)).getValue();
+                        context.startActivity(new Intent(context,ParagraphActivity.class));
+                    }
+                });
+                TextView textView = (TextView) layout.findViewById(R.id.text_book_home_list_button);
                 textView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Long bookId = (Long) ((ObjectValueView) v.findViewById(R.id.object_book_home_item_book_id)).getValue();
+                        Long bookId = (Long) ((ObjectValueView) layout.findViewById(R.id.object_book_home_item_book_id)).getValue();
                         asyncParagraphData(bookId);
                     }
-                });*/
+                });
                 super.onOpen(layout);
             }
         });

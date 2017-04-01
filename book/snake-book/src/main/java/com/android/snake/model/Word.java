@@ -15,8 +15,17 @@ import java.io.Serializable;
 public class Word extends SugarRecord implements Serializable{
 
     @Expose
+    @Column(name = "word_id")
+    private long wordId;
+    @Expose
+    @Column(name = "book_id")
+    private long bookId;
+    @Expose
     @Column(name = "value_")
     private String value;
+    @Expose
+    @Column(name = "count_")
+    private int count;
     @Expose
     @Column(name = "created_time")
     private String createdTime;
@@ -27,12 +36,36 @@ public class Word extends SugarRecord implements Serializable{
     @Column(name = "deleted_")
     private int deleted;
 
+    public long getWordId() {
+        return wordId;
+    }
+
+    public void setWordId(long wordId) {
+        this.wordId = wordId;
+    }
+
+    public long getBookId() {
+        return bookId;
+    }
+
+    public void setBookId(long bookId) {
+        this.bookId = bookId;
+    }
+
     public String getValue() {
         return value;
     }
 
     public void setValue(String value) {
         this.value = value;
+    }
+
+    public int getCount() {
+        return count;
+    }
+
+    public void setCount(int count) {
+        this.count = count;
     }
 
     public String getCreatedTime() {

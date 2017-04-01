@@ -12,6 +12,7 @@ import com.android.snake.model.Paragraph;
 import com.android.snake.model.Sync;
 import com.android.snake.model.Book;
 import com.android.snake.task.BookAsyncTask;
+import com.android.snake.task.WordAsyncTask;
 import com.android.snake.utils.DateTimeUtils;
 import com.android.snake.utils.HttpInstance;
 
@@ -33,7 +34,7 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.setContentView(R.layout.main);
-//        this.startActivity(new Intent(this,BookActivity.class));
+
         Button book_sync_button = (Button) findViewById(R.id.button_book_sync);
         book_sync_button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -41,15 +42,40 @@ public class MainActivity extends Activity {
                 asyncBookData();
             }
         });
+
         Button book_home_button = (Button) findViewById(R.id.book_home_button);
         book_home_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(MainActivity.this,BookActivity.class));
-//                finish();
             }
         });
 
+        Button button_word_sync = (Button) findViewById(R.id.button_word_sync);
+        button_word_sync.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                asyncWordData();
+            }
+        });
+
+        Button button_word_list = (Button) findViewById(R.id.button_word_list);
+        button_word_list.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this,WordActivity.class));
+            }
+        });
+
+    }
+
+    public void asyncWordData() {
+        try {
+            AsyncTask asyncTask = new WordAsyncTask();
+            asyncTask.execute();
+        } catch (Exception e) {
+            Log.e(LOG_TAG, e.getMessage());
+        }
     }
 
     public void asyncBookData() {

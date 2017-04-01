@@ -44,6 +44,14 @@ public class BookActivity extends Activity {
     private ListView book_home_list = null;
     private BookHomeListViewAdapter book_list_adapter = null;
 
+    private View.OnClickListener bookNameOnclick = new View.OnClickListener(){
+
+        @Override
+        public void onClick(View v) {
+
+        }
+    };
+
     @Override
     protected void onCreate(Bundle bundle) {
         super.onCreate(bundle);
@@ -51,6 +59,7 @@ public class BookActivity extends Activity {
         this.setContentView(R.layout.book_home);
         book_home_list = (ListView) findViewById(R.id.list_book_home);
         book_list_adapter = new BookHomeListViewAdapter(this);
+        book_list_adapter.bookNameOnClick(bookNameOnclick);
         book_home_list.setAdapter(book_list_adapter);
         book_list_adapter.setMode(Attributes.Mode.Single);
         book_home_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {

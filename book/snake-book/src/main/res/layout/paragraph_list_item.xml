@@ -2,7 +2,7 @@
 <com.daimajia.swipe.SwipeLayout
     xmlns:swipe="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/book_home_list_swipe"
+    android:id="@+id/paragraph_list_swipe"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     swipe:leftEdgeSwipeOffset="0dp"
@@ -18,7 +18,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/text_book_home_list_button"
+            android:id="@+id/text_paragraph_list_button"
             android:text="test_test"/>
     </LinearLayout>
 
@@ -31,13 +31,13 @@
         <com.android.snake.ObjectValueView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/object_book_home_item_book_id"
+            android:id="@+id/object_paragraph_item_book_id"
             />
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/text_book_home_item_name"
+        android:id="@+id/text_paragraph_item_name"
         />
     </LinearLayout>
 
