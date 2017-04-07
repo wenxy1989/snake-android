@@ -17,7 +17,7 @@ import java.net.URL;
 public class HttpInstance {
 
     private static final String CHAR_SET = "UTF-8";
-//    private static final String serverHost = "http://localhost:8007/";
+    //    private static final String serverHost = "http://localhost:8007/";
 //    private static final String serverHost = "http://192.168.2.114:8081/";
     private static final String serverHost = "http://192.168.3.44:8007/";
 
@@ -38,28 +38,28 @@ public class HttpInstance {
     }
 
     public String doGet(String uri) {
-        return doHttpRequest(uri,"GET",null);
+        return doHttpRequest(uri, "GET", null);
     }
 
-    public String doGet(String uri,String json) {
-        return doHttpRequest(uri,"GET",json);
+    public String doGet(String uri, String json) {
+        return doHttpRequest(uri, "GET", json);
     }
 
     public String doPost(String uri) {
-        return doHttpRequest(uri,"POST",null);
+        return doHttpRequest(uri, "POST", null);
     }
 
-    public String doPost(String uri,String json) {
-        return doHttpRequest(uri,"POST",json);
+    public String doPost(String uri, String json) {
+        return doHttpRequest(uri, "POST", json);
     }
 
-    public String doHttpRequest(String uri,String method, String json) {
+    public String doHttpRequest(String uri, String method, String json) {
         String result = null;
         OutputStream out = null;
         InputStream in = null;
         try {
-            Log.d("book http url ",serverHost + uri);
-            if(null != json) {
+            Log.d("book http url ", serverHost + uri);
+            if (null != json) {
                 Log.d("book http data  ", json);
             }
             URL url = new URL(serverHost + uri);
@@ -76,13 +76,16 @@ public class HttpInstance {
                 out = connection.getOutputStream();
                 out.write(data);
             }
-            int response = connection.getResponseCode();
-            if (response == HttpURLConnection.HTTP_OK) {
+            int responseCode = connection.getResponseCode();
+            if (responseCode == HttpURLConnection.HTTP_OK) {
                 in = connection.getInputStream();
                 result = decodeInputStream(in);
+            } else {
+                in = connection.getInputStream();
+                result = "{\"code\":" + responseCode + ",\"result\":" + decodeInputStream(in) + "}";
             }
         } catch (IOException e) {
-            Log.d("book http error ", e.getMessage());
+            Log.e("http connection error ", e.getMessage());
         } finally {
             try {
                 if (null != in) {
@@ -92,10 +95,10 @@ public class HttpInstance {
                     out.close();
                 }
             } catch (IOException e) {
-                e.printStackTrace();
+                Log.e("http close error ", e.getMessage());
             }
         }
-        Log.d("book http return ", result);
+        Log.e("book http result ", result);
         return result;
     }
 

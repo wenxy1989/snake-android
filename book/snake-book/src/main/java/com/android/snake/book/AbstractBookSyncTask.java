@@ -3,7 +3,6 @@ package com.android.snake.book;
 import android.os.AsyncTask;
 import android.util.Log;
 
-import com.android.snake.model.Book;
 import com.android.snake.model.Sync;
 import com.android.snake.utils.DateTimeUtils;
 import com.android.snake.utils.HttpInstance;

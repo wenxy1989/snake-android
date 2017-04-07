@@ -12,10 +12,12 @@ import android.widget.TextView;
 import com.android.snake.ObjectValueView;
 import com.android.snake.book.AbstractBookSyncTask;
 import com.android.snake.book.ParagraphActivity;
+import com.android.snake.book.PhraseActivity;
 import com.android.snake.book.R;
 import com.android.snake.model.Book;
 import com.android.snake.model.Paragraph;
 import com.android.snake.task.ParagraphAsyncTask;
+import com.android.snake.task.PhraseAsyncTask;
 import com.daimajia.swipe.SimpleSwipeListener;
 import com.daimajia.swipe.SwipeLayout;
 import com.daimajia.swipe.adapters.BaseSwipeAdapter;
@@ -64,8 +66,32 @@ public class BookHomeListViewAdapter extends BaseSwipeAdapter {
                         context.startActivity(new Intent(context,ParagraphActivity.class));
                     }
                 });
-                TextView textView = (TextView) layout.findViewById(R.id.text_book_home_list_button);
-                textView.setOnClickListener(new View.OnClickListener() {
+                TextView text_book_home_paragraph = (TextView) layout.findViewById(R.id.text_book_home_paragraph);
+                text_book_home_paragraph.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        selected_book_id = (Long) ((ObjectValueView) layout.findViewById(R.id.object_book_home_item_book_id)).getValue();
+                        context.startActivity(new Intent(context,ParagraphActivity.class));
+                    }
+                });
+                TextView text_book_home_phrase = (TextView) layout.findViewById(R.id.text_book_home_phrase);
+                text_book_home_phrase.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        selected_book_id = (Long) ((ObjectValueView) layout.findViewById(R.id.object_book_home_item_book_id)).getValue();
+                        context.startActivity(new Intent(context,PhraseActivity.class));
+                    }
+                });
+                TextView text_async_phrase = (TextView) layout.findViewById(R.id.text_book_list_async_phrase);
+                text_async_phrase.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Long bookId = (Long) ((ObjectValueView) layout.findViewById(R.id.object_book_home_item_book_id)).getValue();
+                        asyncPhraseData(bookId);
+                    }
+                });
+                TextView text_async_paragraph = (TextView) layout.findViewById(R.id.text_book_list_async_paragraph);
+                text_async_paragraph.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         Long bookId = (Long) ((ObjectValueView) layout.findViewById(R.id.object_book_home_item_book_id)).getValue();
@@ -82,6 +108,15 @@ public class BookHomeListViewAdapter extends BaseSwipeAdapter {
             }
         });
         return itemView;
+    }
+
+    public void asyncPhraseData(final Long bookId) {
+        try {
+            AsyncTask asyncTask = new PhraseAsyncTask(bookId);
+            asyncTask.execute();
+        } catch (Exception e) {
+            Log.e(LOG_TAG, e.getMessage());
+        }
     }
 
     public void asyncParagraphData(final Long bookId) {

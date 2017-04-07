@@ -15,6 +15,12 @@ import java.io.Serializable;
 public class Phrase extends SugarRecord implements Serializable{
 
     @Expose
+    @Column(name = "phrase_id")
+    private long phraseId;
+    @Expose
+    @Column(name = "book_id")
+    private long bookId;
+    @Expose
     @Column(name = "value_")
     private String value;
     @Expose
@@ -26,6 +32,22 @@ public class Phrase extends SugarRecord implements Serializable{
     @Expose
     @Column(name = "deleted_")
     private int deleted;
+
+    public long getPhraseId() {
+        return phraseId;
+    }
+
+    public void setPhraseId(long phraseId) {
+        this.phraseId = phraseId;
+    }
+
+    public long getBookId() {
+        return bookId;
+    }
+
+    public void setBookId(long bookId) {
+        this.bookId = bookId;
+    }
 
     public String getValue() {
         return value;

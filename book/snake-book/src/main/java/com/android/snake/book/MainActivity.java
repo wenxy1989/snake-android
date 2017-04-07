@@ -12,6 +12,7 @@ import com.android.snake.model.Paragraph;
 import com.android.snake.model.Sync;
 import com.android.snake.model.Book;
 import com.android.snake.task.BookAsyncTask;
+import com.android.snake.task.PhraseAsyncTask;
 import com.android.snake.task.WordAsyncTask;
 import com.android.snake.utils.DateTimeUtils;
 import com.android.snake.utils.HttpInstance;
