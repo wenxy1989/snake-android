@@ -1,0 +1,131 @@
+package com.android.snake.book;
+
+import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
+import android.text.Html;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.BaseAdapter;
+import android.widget.Button;
+import android.widget.ListView;
+import android.widget.TextView;
+
+import com.android.snake.model.Paragraph;
+import com.android.snake.model.Sync;
+import com.android.snake.model.Word;
+import com.android.snake.utils.DateTimeUtils;
+
+import java.util.List;
+
+/**
+ * Created by wenxy on 2017/3/15.
+ */
+public class WordCheckActivity extends Activity {
+
+    protected static final String LOG_TAG = "WordCheckActivity";
+
+    protected Context context = null;
+    protected Word word = null;
+    protected ListView paragraph_list = null;
+    protected BaseAdapter paragraph_list_adapter = null;
+
+    private static final String word_check_sync_key = "word_checked";
+
+    protected View.OnClickListener afterCheckPass;
+    protected View.OnClickListener afterCheckCancel;
+
+    protected void afterCheckPass(View.OnClickListener afterCheckPass){
+        this.afterCheckPass = afterCheckPass;
+    }
+
+    protected void afterCheckCancel(View.OnClickListener afterCheckCancel){
+        this.afterCheckCancel = afterCheckCancel;
+    }
+
+    public int getWordCheckCurrentIndex() {
+        int index = 0;
+        Sync sync = Sync.getObjectByKey(word_check_sync_key);
+        if (null == sync) {
+            sync = new Sync();
+            sync.setKey(word_check_sync_key);
+            sync.setSyncTime(DateTimeUtils.getInstance().getNowDateTime());
+            sync.setTotalCount((int) Word.count(Word.class));
+            sync.setSyncCount(0);
+            sync.save();
+        }
+        index = sync.getSyncCount() + 1;
+        return index;
+    }
+
+    public void updateWordCheckedCurrentIndex() {
+        Sync sync = Sync.getObjectByKey(word_check_sync_key);
+        sync.setSyncCount(sync.getSyncCount() + 1);
+        sync.save();
+    }
+
+    protected void initLayout(final Context context) {
+        word = Word.findById(Word.class, getWordCheckCurrentIndex());
+        if (null == word) {
+            return;
+        }
+        final TextView word_text = (TextView) findViewById(R.id.text_word_check_word);
+        word_text.setText(word.getValue());
+        paragraph_list_adapter = new BaseAdapter() {
+            @Override
+            public int getCount() {
+                int count = (int) Sync.count(Paragraph.class, "value_ like '%" + word.getValue() + "%'", null);
+                return count < 20 ? count : 20;
+            }
+
+            @Override
+            public Object getItem(int position) {
+                return null;
+            }
+
+            @Override
+            public long getItemId(int position) {
+                return position;
+            }
+
+            @Override
+            public View getView(int position, View convertView, ViewGroup parent) {
+                TextView view = new TextView(context);
+                List<Paragraph> list = Paragraph.find(Paragraph.class, "value_ like '%" + word.getValue() + "%' limit ?,1", position + "");
+                if (null != list && list.size() > 0) {
+                    Paragraph object = list.get(0);
+                    String html = object.getValue().replaceAll(word.getValue(),"<font color=\"#396fe2\">"+word.getValue()+"</font>");
+                    view.setText(Html.fromHtml(html,Html.FROM_HTML_OPTION_USE_CSS_COLORS));
+                }
+                return view;
+            }
+        };
+        paragraph_list = (ListView) findViewById(R.id.list_view);
+        paragraph_list.setAdapter(paragraph_list_adapter);
+        Button cancel_button = (Button) findViewById(R.id.button_word_check_cancel);
+        cancel_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                word.setStatus(1);
+                word.update();
+                updateWordCheckedCurrentIndex();
+                if(null != afterCheckCancel){
+                    afterCheckCancel.onClick(v);
+                }
+            }
+        });
+        Button pass_button = (Button) findViewById(R.id.button_word_check_pass);
+        pass_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                word.setStatus(1);
+                word.update();
+                updateWordCheckedCurrentIndex();
+                if(null != afterCheckPass){
+                    afterCheckPass.onClick(v);
+                }
+            }
+        });
+    }
+
+}

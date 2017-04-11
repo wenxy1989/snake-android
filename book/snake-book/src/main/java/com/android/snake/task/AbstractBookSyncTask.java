@@ -1,4 +1,4 @@
-package com.android.snake.book;
+package com.android.snake.task;
 
 import android.os.AsyncTask;
 import android.util.Log;
@@ -28,14 +28,12 @@ public abstract class AbstractBookSyncTask extends AsyncTask<Object, Object, Obj
     public abstract void afterSyncList(JSONObject json);
 
     public Sync getUpdateSync() {
-        Sync sync = null;
+        Sync sync = Sync.getObjectByKey(getSyncKey());
         try {
             String jsonString = HttpInstance.getInstant().doGet("book/api/" + getModule() + "/stat");
             JSONObject json = new JSONObject(jsonString);
             int total = json.getInt("count");
-            List<Sync> list = Sync.find(Sync.class, "key_=?", getSyncKey());
-            if (null != list && list.size() > 0) {
-                sync = list.get(0);
+            if (null != sync) {
                 if (sync.getTotalCount() == total) {
                     sync.setTotalCount(total);
                 }

@@ -10,19 +10,15 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.android.snake.ObjectValueView;
-import com.android.snake.book.AbstractBookSyncTask;
 import com.android.snake.book.ParagraphActivity;
 import com.android.snake.book.PhraseActivity;
 import com.android.snake.book.R;
 import com.android.snake.model.Book;
-import com.android.snake.model.Paragraph;
 import com.android.snake.task.ParagraphAsyncTask;
 import com.android.snake.task.PhraseAsyncTask;
 import com.daimajia.swipe.SimpleSwipeListener;
 import com.daimajia.swipe.SwipeLayout;
 import com.daimajia.swipe.adapters.BaseSwipeAdapter;
-
-import org.json.JSONObject;
 
 /**
  * Created by wenxy on 2017/3/18.

@@ -21,7 +21,9 @@
         <activity android:name=".BookActivity"/>
         <activity android:name=".ParagraphActivity"/>
         <activity android:name=".PhraseActivity"/>
-        <activity android:name=".WordActivity"/>
+        <activity android:name=".WordListActivity"/>
+        <activity android:name=".WordCheckTopActivity"/>
+        <activity android:name=".WordCheckBottomActivity"/>
 
         <meta-data android:name="DATABASE" android:value="snake_book.db"/>
         <meta-data android:name="VERSION" android:value="1"/>

@@ -34,6 +34,7 @@ public class MainActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        this.startActivity(new Intent(this, WordCheckTopActivity.class));
         this.setContentView(R.layout.main);
 
         Button book_sync_button = (Button) findViewById(R.id.button_book_sync);
@@ -48,7 +49,7 @@ public class MainActivity extends Activity {
         book_home_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this,BookActivity.class));
+                startActivity(new Intent(MainActivity.this, BookActivity.class));
             }
         });
 
@@ -64,7 +65,7 @@ public class MainActivity extends Activity {
         button_word_list.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this,WordActivity.class));
+                startActivity(new Intent(MainActivity.this, WordListActivity.class));
             }
         });
 

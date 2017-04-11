@@ -25,7 +25,7 @@ import java.util.List;
 
 public class ParagraphListViewAdapter extends BaseSwipeAdapter {
 
-    private static final String LOG_TAG = "snake book Paragraph Adapter";
+    private static final String LOG_TAG = "ParagraphListViewAdapter";
 
     private Context context;
     private Long bookId;

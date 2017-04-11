@@ -6,6 +6,7 @@ import com.orm.dsl.Column;
 import com.orm.dsl.Table;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * Created by HP on 2017/3/17.
@@ -64,5 +65,14 @@ public class Sync extends SugarRecord implements Serializable {
 
     public void setSyncTime(String syncTime) {
         this.syncTime = syncTime;
+    }
+
+    public static Sync getObjectByKey(String key){
+        Sync sync = null;
+        List<Sync> list = Sync.find(Sync.class, "key_=?", key);
+        if (null != list && list.size() > 0) {
+            sync = list.get(0);
+        }
+        return sync;
     }
 }

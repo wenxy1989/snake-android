@@ -2,7 +2,6 @@ package com.android.snake.task;
 
 import android.util.Log;
 
-import com.android.snake.book.AbstractBookSyncTask;
 import com.android.snake.model.Book;
 
 import org.json.JSONObject;
