@@ -14,6 +14,10 @@ import com.android.snake.model.Word;
 import com.daimajia.swipe.SimpleSwipeListener;
 import com.daimajia.swipe.SwipeLayout;
 import com.daimajia.swipe.adapters.BaseSwipeAdapter;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
+import org.json.JSONObject;
 
 import java.util.List;
 
@@ -67,7 +71,8 @@ public class WordListViewAdapter extends BaseSwipeAdapter {
         ObjectValueView objectValueView = (ObjectValueView) convertView.findViewById(R.id.object_word_item_book_id);
         Word word = Word.findById(Word.class, position + 1);
         if(null != word) {
-            text.setText(word.getValue());
+            Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
+            text.setText(gson.toJson(word));
             objectValueView.setValue(word.getBookId());
         }
     }

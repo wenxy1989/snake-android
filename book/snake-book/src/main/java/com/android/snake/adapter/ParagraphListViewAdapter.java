@@ -16,6 +16,8 @@ import com.android.snake.task.ParagraphAsyncTask;
 import com.daimajia.swipe.SimpleSwipeListener;
 import com.daimajia.swipe.SwipeLayout;
 import com.daimajia.swipe.adapters.BaseSwipeAdapter;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import java.util.List;
 
@@ -70,7 +72,8 @@ public class ParagraphListViewAdapter extends BaseSwipeAdapter {
         TextView text = (TextView) convertView.findViewById(R.id.text_paragraph_item_name);
         List<Paragraph> list = Paragraph.find(Paragraph.class,"book_id=? limit ?,1", new String[]{bookId+"",(position + 1)+""});
         if(null != list && list.size() > 0) {
-            text.setText(list.get(0).getValue());
+            Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
+            text.setText(gson.toJson(list.get(0)));
         }
     }
 

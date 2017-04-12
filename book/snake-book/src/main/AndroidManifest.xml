@@ -19,11 +19,13 @@
             </intent-filter>
         </activity>
         <activity android:name=".BookActivity"/>
-        <activity android:name=".ParagraphActivity"/>
-        <activity android:name=".PhraseActivity"/>
-        <activity android:name=".WordListActivity"/>
+        <activity android:name=".WordCheckActivity"/>
         <activity android:name=".WordCheckTopActivity"/>
         <activity android:name=".WordCheckBottomActivity"/>
+        <activity android:name=".model.ParagraphListActivity"/>
+        <activity android:name=".model.PhraseListActivity"/>
+        <activity android:name=".model.WordListActivity"/>
+        <activity android:name=".model.SyncListActivity"/>
 
         <meta-data android:name="DATABASE" android:value="snake_book.db"/>
         <meta-data android:name="VERSION" android:value="1"/>

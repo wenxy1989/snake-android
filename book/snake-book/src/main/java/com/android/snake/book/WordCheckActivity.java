@@ -3,6 +3,7 @@ package com.android.snake.book;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.text.Html;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,14 +33,24 @@ public class WordCheckActivity extends Activity {
 
     private static final String word_check_sync_key = "word_checked";
 
-    protected View.OnClickListener afterCheckPass;
-    protected View.OnClickListener afterCheckCancel;
+    protected View.OnClickListener afterCheckPass = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            setCurrentWord();
+        }
+    };
+    protected View.OnClickListener afterCheckCancel = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            setCurrentWord();
+        }
+    };
 
-    protected void afterCheckPass(View.OnClickListener afterCheckPass){
+    protected void afterCheckPass(View.OnClickListener afterCheckPass) {
         this.afterCheckPass = afterCheckPass;
     }
 
-    protected void afterCheckCancel(View.OnClickListener afterCheckCancel){
+    protected void afterCheckCancel(View.OnClickListener afterCheckCancel) {
         this.afterCheckCancel = afterCheckCancel;
     }
 
@@ -61,45 +72,22 @@ public class WordCheckActivity extends Activity {
     public void updateWordCheckedCurrentIndex() {
         Sync sync = Sync.getObjectByKey(word_check_sync_key);
         sync.setSyncCount(sync.getSyncCount() + 1);
+        sync.setSyncTime(DateTimeUtils.getInstance().getNowDateTime());
         sync.save();
     }
 
-    protected void initLayout(final Context context) {
+    protected void initContext(Context context){
+        this.context = context;
+    }
+
+    protected void setCurrentWord(){
         word = Word.findById(Word.class, getWordCheckCurrentIndex());
         if (null == word) {
             return;
         }
-        final TextView word_text = (TextView) findViewById(R.id.text_word_check_word);
+        TextView word_text = (TextView) findViewById(R.id.text_word_check_word);
         word_text.setText(word.getValue());
-        paragraph_list_adapter = new BaseAdapter() {
-            @Override
-            public int getCount() {
-                int count = (int) Sync.count(Paragraph.class, "value_ like '%" + word.getValue() + "%'", null);
-                return count < 20 ? count : 20;
-            }
-
-            @Override
-            public Object getItem(int position) {
-                return null;
-            }
-
-            @Override
-            public long getItemId(int position) {
-                return position;
-            }
-
-            @Override
-            public View getView(int position, View convertView, ViewGroup parent) {
-                TextView view = new TextView(context);
-                List<Paragraph> list = Paragraph.find(Paragraph.class, "value_ like '%" + word.getValue() + "%' limit ?,1", position + "");
-                if (null != list && list.size() > 0) {
-                    Paragraph object = list.get(0);
-                    String html = object.getValue().replaceAll(word.getValue(),"<font color=\"#396fe2\">"+word.getValue()+"</font>");
-                    view.setText(Html.fromHtml(html,Html.FROM_HTML_OPTION_USE_CSS_COLORS));
-                }
-                return view;
-            }
-        };
+        paragraph_list_adapter = new ParagraphAdapter();
         paragraph_list = (ListView) findViewById(R.id.list_view);
         paragraph_list.setAdapter(paragraph_list_adapter);
         Button cancel_button = (Button) findViewById(R.id.button_word_check_cancel);
@@ -109,7 +97,7 @@ public class WordCheckActivity extends Activity {
                 word.setStatus(1);
                 word.update();
                 updateWordCheckedCurrentIndex();
-                if(null != afterCheckCancel){
+                if (null != afterCheckCancel) {
                     afterCheckCancel.onClick(v);
                 }
             }
@@ -121,11 +109,58 @@ public class WordCheckActivity extends Activity {
                 word.setStatus(1);
                 word.update();
                 updateWordCheckedCurrentIndex();
-                if(null != afterCheckPass){
+                if (null != afterCheckPass) {
                     afterCheckPass.onClick(v);
                 }
             }
         });
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        this.setContentView(R.layout.word_check_layout_bottom);
+        initContext(this);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        setCurrentWord();
+    }
+
+    class ParagraphAdapter extends BaseAdapter {
+        @Override
+        public int getCount() {
+            int count = (int) Sync.count(Paragraph.class, "value_ like '%" + word.getValue() + "%'", null);
+            return count < 20 ? count : 20;
+        }
+
+        @Override
+        public Object getItem(int position) {
+            return null;
+        }
+
+        @Override
+        public long getItemId(int position) {
+            return position;
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            TextView view = new TextView(context);
+            List<Paragraph> list = Paragraph.find(Paragraph.class, "value_ like '%" + word.getValue() + "%' limit ?,1", position + "");
+            if (null != list && list.size() > 0) {
+                Paragraph object = list.get(0);
+                String html = object.getValue().replaceAll(word.getValue(), "<font color=\"#396fe2\">" + word.getValue() + "</font>");
+                if (null != html && html.length() > 0) {
+                    view.setText(Html.fromHtml(html, Html.FROM_HTML_OPTION_USE_CSS_COLORS));
+                }else {
+                    view.setText(html);
+                }
+            }
+            return view;
+        }
     }
 
 }

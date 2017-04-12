@@ -10,8 +10,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.android.snake.ObjectValueView;
-import com.android.snake.book.ParagraphActivity;
-import com.android.snake.book.PhraseActivity;
+import com.android.snake.book.model.ParagraphListActivity;
+import com.android.snake.book.model.PhraseListActivity;
 import com.android.snake.book.R;
 import com.android.snake.model.Book;
 import com.android.snake.task.ParagraphAsyncTask;
@@ -19,6 +19,8 @@ import com.android.snake.task.PhraseAsyncTask;
 import com.daimajia.swipe.SimpleSwipeListener;
 import com.daimajia.swipe.SwipeLayout;
 import com.daimajia.swipe.adapters.BaseSwipeAdapter;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 /**
  * Created by wenxy on 2017/3/18.
@@ -59,7 +61,7 @@ public class BookHomeListViewAdapter extends BaseSwipeAdapter {
                     @Override
                     public void onClick(View v) {
                         selected_book_id = (Long) ((ObjectValueView) layout.findViewById(R.id.object_book_home_item_book_id)).getValue();
-                        context.startActivity(new Intent(context,ParagraphActivity.class));
+                        context.startActivity(new Intent(context,ParagraphListActivity.class));
                     }
                 });
                 TextView text_book_home_paragraph = (TextView) layout.findViewById(R.id.text_book_home_paragraph);
@@ -67,7 +69,7 @@ public class BookHomeListViewAdapter extends BaseSwipeAdapter {
                     @Override
                     public void onClick(View v) {
                         selected_book_id = (Long) ((ObjectValueView) layout.findViewById(R.id.object_book_home_item_book_id)).getValue();
-                        context.startActivity(new Intent(context,ParagraphActivity.class));
+                        context.startActivity(new Intent(context,ParagraphListActivity.class));
                     }
                 });
                 TextView text_book_home_phrase = (TextView) layout.findViewById(R.id.text_book_home_phrase);
@@ -75,7 +77,7 @@ public class BookHomeListViewAdapter extends BaseSwipeAdapter {
                     @Override
                     public void onClick(View v) {
                         selected_book_id = (Long) ((ObjectValueView) layout.findViewById(R.id.object_book_home_item_book_id)).getValue();
-                        context.startActivity(new Intent(context,PhraseActivity.class));
+                        context.startActivity(new Intent(context,PhraseListActivity.class));
                     }
                 });
                 TextView text_async_phrase = (TextView) layout.findViewById(R.id.text_book_list_async_phrase);
@@ -129,7 +131,8 @@ public class BookHomeListViewAdapter extends BaseSwipeAdapter {
         TextView text = (TextView) convertView.findViewById(R.id.text_book_home_item_name);
         ObjectValueView objectValueView = (ObjectValueView) convertView.findViewById(R.id.object_book_home_item_book_id);
         Book book = Book.findById(Book.class, position + 1);
-        text.setText(book.getName());
+        Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
+        text.setText(gson.toJson(book));
         objectValueView.setValue(book.getBookId());
     }
 

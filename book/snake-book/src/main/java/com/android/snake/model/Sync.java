@@ -4,6 +4,7 @@ import com.google.gson.annotations.Expose;
 import com.orm.SugarRecord;
 import com.orm.dsl.Column;
 import com.orm.dsl.Table;
+import com.orm.dsl.Unique;
 
 import java.io.Serializable;
 import java.util.List;
@@ -15,6 +16,10 @@ import java.util.List;
 public class Sync extends SugarRecord implements Serializable {
 
     @Expose
+    @Unique
+    private Long id;
+    @Expose
+    @Unique
     @Column(name = "key_",unique = true,notNull = true)
     private String key;
 
@@ -33,6 +38,16 @@ public class Sync extends SugarRecord implements Serializable {
     public Sync(){}
     public Sync(String key){
         this.key = key;
+    }
+
+    @Override
+    public Long getId() {
+        return id;
+    }
+
+    @Override
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getKey() {

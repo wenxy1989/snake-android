@@ -4,6 +4,7 @@ import com.google.gson.annotations.Expose;
 import com.orm.SugarRecord;
 import com.orm.dsl.Column;
 import com.orm.dsl.Table;
+import com.orm.dsl.Unique;
 
 import java.io.Serializable;
 
@@ -14,7 +15,9 @@ import java.io.Serializable;
 @Table(name = "snake_book")
 public class Book extends SugarRecord implements Serializable {
 
-
+    @Expose
+    @Unique
+    private Long id;
     @Expose
     @Column(name = "book_id",unique = true)
     private long bookId;
@@ -38,6 +41,16 @@ public class Book extends SugarRecord implements Serializable {
     private int status;
 
     public Book(){}
+
+    @Override
+    public Long getId() {
+        return id;
+    }
+
+    @Override
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public long getBookId() {
         return bookId;
