@@ -14,7 +14,9 @@ import android.widget.TextView;
 
 import com.android.snake.model.Paragraph;
 import com.android.snake.model.Sync;
+import com.android.snake.model.SyncKey;
 import com.android.snake.model.Word;
+import com.android.snake.model.WordStatus;
 import com.android.snake.utils.DateTimeUtils;
 
 import java.util.List;
@@ -30,8 +32,6 @@ public class WordCheckActivity extends Activity {
     protected Word word = null;
     protected ListView paragraph_list = null;
     protected BaseAdapter paragraph_list_adapter = null;
-
-    private static final String word_check_sync_key = "word_checked";
 
     protected View.OnClickListener afterCheckPass = new View.OnClickListener() {
         @Override
@@ -56,10 +56,10 @@ public class WordCheckActivity extends Activity {
 
     public int getWordCheckCurrentIndex() {
         int index = 0;
-        Sync sync = Sync.getObjectByKey(word_check_sync_key);
+        Sync sync = Sync.getObjectByKey(SyncKey.word_checked_key.getKey());
         if (null == sync) {
             sync = new Sync();
-            sync.setKey(word_check_sync_key);
+            sync.setKey(SyncKey.word_checked_key.getKey());
             sync.setSyncTime(DateTimeUtils.getInstance().getNowDateTime());
             sync.setTotalCount((int) Word.count(Word.class));
             sync.setSyncCount(0);
@@ -70,7 +70,7 @@ public class WordCheckActivity extends Activity {
     }
 
     public void updateWordCheckedCurrentIndex() {
-        Sync sync = Sync.getObjectByKey(word_check_sync_key);
+        Sync sync = Sync.getObjectByKey(SyncKey.word_checked_key.getKey());
         sync.setSyncCount(sync.getSyncCount() + 1);
         sync.setSyncTime(DateTimeUtils.getInstance().getNowDateTime());
         sync.save();
@@ -94,7 +94,7 @@ public class WordCheckActivity extends Activity {
         cancel_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                word.setStatus(1);
+                word.setStatus(WordStatus.veto.getStatus());
                 word.update();
                 updateWordCheckedCurrentIndex();
                 if (null != afterCheckCancel) {
@@ -106,7 +106,7 @@ public class WordCheckActivity extends Activity {
         pass_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                word.setStatus(1);
+                word.setStatus(WordStatus.verified.getStatus());
                 word.update();
                 updateWordCheckedCurrentIndex();
                 if (null != afterCheckPass) {

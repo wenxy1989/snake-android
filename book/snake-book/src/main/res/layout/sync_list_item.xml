@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/relative_sync_list_item"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    >
+
+    <com.android.snake.ObjectValueView
+        android:id="@+id/object_item_sync_id"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/text_item_sync_json"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="sync json"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_toLeftOf="@+id/button_item_sync_clear"
+        android:layout_toStartOf="@+id/button_item_sync_clear" />
+
+    <Button
+        android:id="@+id/button_item_sync_clear"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Clear"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+</RelativeLayout>

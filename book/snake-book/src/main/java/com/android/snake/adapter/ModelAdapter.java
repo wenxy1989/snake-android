@@ -30,7 +30,7 @@ public class ModelAdapter<T extends SugarRecord> extends BaseAdapter {
     @Override
     public int getCount() {
         int count = (int) Sync.count(clazz);
-        return count < 20 ? count : 20;
+        return count;
     }
 
     @Override

@@ -58,9 +58,9 @@ public class HttpInstance {
         OutputStream out = null;
         InputStream in = null;
         try {
-            Log.d("book http url ", serverHost + uri);
+            Log.e("book http url ", serverHost + uri);
             if (null != json) {
-                Log.d("book http data  ", json);
+                Log.e("book http data  ", json);
             }
             URL url = new URL(serverHost + uri);
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();

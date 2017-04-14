@@ -46,5 +46,15 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/button_sync_list" />
+    <Button
+        android:text="Sync Word Checked Button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/button_sync_word_checked" />
+    <Button
+        android:text="Word Check Button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/button_word_check" />
 </LinearLayout>
 

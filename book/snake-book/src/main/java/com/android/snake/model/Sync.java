@@ -19,7 +19,6 @@ public class Sync extends SugarRecord implements Serializable {
     @Unique
     private Long id;
     @Expose
-    @Unique
     @Column(name = "key_",unique = true,notNull = true)
     private String key;
 

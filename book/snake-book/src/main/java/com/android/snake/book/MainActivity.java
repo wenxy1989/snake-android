@@ -14,6 +14,7 @@ import com.android.snake.book.model.SyncListActivity;
 import com.android.snake.book.model.WordListActivity;
 import com.android.snake.task.BookAsyncTask;
 import com.android.snake.task.WordAsyncTask;
+import com.android.snake.task.WordUpdateTask;
 
 /**
  * Created by wenxy on 2017/3/12.
@@ -78,6 +79,20 @@ public class MainActivity extends Activity {
             }
         });
 
+        findViewById(R.id.button_sync_word_checked).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                asyncWordCheckedData();
+            }
+        });
+
+        findViewById(R.id.button_word_check).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MainActivity.this.startActivity(new Intent(MainActivity.this, WordCheckActivity.class));
+            }
+        });
+
     }
 
     public void asyncWordData() {
@@ -92,6 +107,15 @@ public class MainActivity extends Activity {
     public void asyncBookData() {
         try {
             AsyncTask asyncTask = new BookAsyncTask();
+            asyncTask.execute();
+        } catch (Exception e) {
+            Log.e(LOG_TAG, e.getMessage());
+        }
+    }
+
+    public void asyncWordCheckedData() {
+        try {
+            AsyncTask asyncTask = new WordUpdateTask();
             asyncTask.execute();
         } catch (Exception e) {
             Log.e(LOG_TAG, e.getMessage());
